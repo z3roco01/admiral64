@@ -4,15 +4,15 @@
 #include<stdint.h>
 #include"mmio.h"
 
-#define GPFSEL0   ((volatile uint32_t*)(MMIO_BASE+0x200000))
-#define GPFSEL1   ((volatile uint32_t*)(MMIO_BASE+0x200004))
-#define GPFSEL2   ((volatile uint32_t*)(MMIO_BASE+0x200008))
-#define GPFSEL3   ((volatile uint32_t*)(MMIO_BASE+0x20000C))
-#define GPFSEL4   ((volatile uint32_t*)(MMIO_BASE+0x200010))
-#define GPFSEL5   ((volatile uint32_t*)(MMIO_BASE+0x200014))
-#define GPPUD     ((volatile uint32_t*)(MMIO_BASE+0x200094))
-#define GPPUDCLK0 ((volatile uint32_t*)(MMIO_BASE+0x200098))
-#define GPPUDCLK1 ((volatile uint32_t*)(MMIO_BASE+0x20009C))
+#define GPFSEL0   ((volatile uint32_t*)MMIO_BASE+0x200000)
+#define GPFSEL1   ((volatile uint32_t*)MMIO_BASE+0x200004)
+#define GPFSEL2   ((volatile uint32_t*)MMIO_BASE+0x200008)
+#define GPFSEL3   ((volatile uint32_t*)MMIO_BASE+0x20000C)
+#define GPFSEL4   ((volatile uint32_t*)MMIO_BASE+0x200010)
+#define GPFSEL5   ((volatile uint32_t*)MMIO_BASE+0x200014)
+#define GPPUD     ((volatile uint32_t*)MMIO_BASE+0x200094)
+#define GPPUDCLK0 ((volatile uint32_t*)MMIO_BASE+0x200098)
+#define GPPUDCLK1 ((volatile uint32_t*)MMIO_BASE+0x20009C)
 
 typedef enum gpFun {
     GPF_IN,
