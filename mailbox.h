@@ -25,4 +25,7 @@
 #define MAILBOX_CH_TOUCH  6 // Mailbox channel 6: touch screen interface
 #define MAILBOX_CH_TAG    7 // Mailbox channel 7: ARM -> VC tag interface
 
+uint32_t mailboxRead(uint8_t ch);
+void mailboxWrite(uint8_t ch, uint32_t data);
+
 #endif // MAILBOX_H_
