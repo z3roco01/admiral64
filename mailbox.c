@@ -1,27 +1,37 @@
-#include "mailbox.h"
+#include"mailbox.h"
 
-// first nybble gets set to the channel
-void mailboxWrite(uint8_t ch, uint32_t data) {
-    // actual data to write
-    uint32_t chData = (data & 0xFFFFFFF0) | (ch & 0x0F);
-
-    // wait until the full bit is clear
+void mailboxWrite(uint32_t value, uint8_t ch) {
+    // add the channel to the last 4 bits
+    uint32_t data = (value&~0xF) | (ch&0xF);
+    // wait until the full flag is clear
     while(*MAILBOX_STATUS & MAILBOX_FULL){asm volatile("nop");}
-
-    *MAILBOX_WRITE = chData;
+    // write the data
+    *MAILBOX_WRITE = data;
 }
 
 uint32_t mailboxRead(uint8_t ch) {
     while(1) {
-        // wait until it has data
+        // wait until the empty flag is not set
         while(*MAILBOX_STATUS & MAILBOX_EMPTY){asm volatile("nop");}
 
-        // read new data and extra channel
+        // read the data and extract the channel number
         uint32_t data = *MAILBOX_READ;
-        uint8_t readCh = (uint8_t)data & 0x0F;
+        uint8_t readCh = data & 0xF;
 
-        // if the data comes from the right channel, then return it, without the channel id
-        if(readCh == ch)
-            return data & 0xFFFFFFF0;
+        // if the data is from the correct channel, return it
+        if((ch&0xF) == readCh)
+            return data&~0xF;
     }
+}
+
+// send a mailbox tag
+uint8_t mailboxSendTag(uint32_t** tag) {
+    // get the address of the tag correctly
+    uint32_t data = (uint32_t)(uint64_t)tag;
+    // write the address to the proper mailbox
+    mailboxWrite(data, MAILBOX_CH_TAG);
+    // wait until a response is given
+    mailboxRead(MAILBOX_CH_TAG);
+
+    return 1;
 }
