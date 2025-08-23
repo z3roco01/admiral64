@@ -19,10 +19,10 @@
 #define MAILBOX_CH_TAG     8
 
 // mailbox addresses
-#define MAILBOX_BASE  (MMIO_BASE+0xB880)
-#define MAILBOX_READ       ((volatile unsigned int*)MAILBOX_BASE)
-#define MAILBOX_STATUS     ((volatile unsigned int*)MAILBOX_BASE+0x18)
-#define MAILBOX_WRITE      ((volatile unsigned int*)MAILBOX_BASE+0x20)
+#define MAILBOX_BASE    (MMIO_BASE+0xB880)
+#define MAILBOX_READ    ((volatile unsigned int*)(MAILBOX_BASE))
+#define MAILBOX_STATUS  ((volatile unsigned int*)(MAILBOX_BASE+0x18))
+#define MAILBOX_WRITE   ((volatile unsigned int*)(MAILBOX_BASE+0x20))
 
 // flag masks
 #define MAILBOX_RESPONSE   0x80000000
