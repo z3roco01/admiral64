@@ -32,7 +32,19 @@
 // tag constants
 #define MAILBOX_TAG_LAST           0
 
-uint8_t mailboxSendTag(uint32_t** tag);
+// mailbox structs
+typedef struct mailboxTag {
+    uint32_t id;
+    uint32_t bufSize;
+    uint32_t valLen;
+} __attribute__((aligned(16))) __attribute__((packed)) mailboxTag_t;
 
+typedef struct mailboxPayload {
+    uint32_t size; // in bytes
+    uint32_t code; // should be MAILBOX_REQUEST i think
+    mailboxTag_t* tags;
+} __attribute__((aligned(16))) __attribute__((packed)) mailboxPayload_t;
+
+uint8_t mailboxSendTag(uint32_t* tag);
 
 #endif // MAILBOX_H_

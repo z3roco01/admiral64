@@ -25,7 +25,7 @@ uint32_t mailboxRead(uint8_t ch) {
 }
 
 // send a mailbox tag
-uint8_t mailboxSendTag(uint32_t** tag) {
+uint8_t mailboxSendTag(void* tag) {
     // get the address of the tag correctly
     uint32_t data = (uint32_t)(uint64_t)tag;
     // write the address to the proper mailbox
