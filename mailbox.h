@@ -32,6 +32,11 @@
 // tag constants
 #define MAILBOX_TAG_LAST           0
 
+// mailbox enums
+typedef enum mailboxTagId {
+    MAILBOX_FB_SET_PHY_SIZE = 0x48003,
+} mailboxTagId_t;
+
 // mailbox structs
 typedef struct mailboxTag {
     uint32_t id;
@@ -45,6 +50,6 @@ typedef struct mailboxPayload {
     mailboxTag_t* tags;
 } __attribute__((aligned(16))) __attribute__((packed)) mailboxPayload_t;
 
-uint8_t mailboxSendTag(uint32_t* tag);
+uint8_t mailboxSendTag(void* tag);
 
 #endif // MAILBOX_H_
