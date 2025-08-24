@@ -1,6 +1,5 @@
 #include"uart.h"
 #include"mailbox.h"
-#include"homer.h"
 
 unsigned int width, height, pitch, isrgb;   /* dimensions and channel order */
 unsigned char *lfb;
