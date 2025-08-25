@@ -2,7 +2,7 @@
 #include"mailbox.h"
 #include"gpu.h"
 
-void kmain() {
+void kmain(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3) {
     ((uint8_t*)0xA00000)[0] = 0x11;
 
     miniuartInit();
