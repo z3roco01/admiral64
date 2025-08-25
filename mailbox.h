@@ -34,7 +34,13 @@
 
 // mailbox enums
 typedef enum mailboxTagId {
-    MAILBOX_FB_SET_PHY_SIZE = 0x48003,
+    MAILBOX_FB_ALLOC_FB      = 0x40001,
+    MAILBOX_FB_GET_PITCH     = 0x40008,
+    MAILBOX_FB_SET_PHY_SIZE  = 0x48003,
+    MAILBOX_FB_SET_VIRT_SIZE = 0x48004,
+    MAILBOX_FB_SET_DEPTH     = 0x48005,
+    MAILBOX_FB_SET_ORDER     = 0x48006,
+    MAILBOX_FB_SET_VIRT_OFF  = 0x48009,
 } mailboxTagId_t;
 
 // mailbox structs

@@ -9,7 +9,7 @@
 typedef struct mailboxFBAlloc {
     mailboxTag_t tag;
     uint32_t base; // base of the buffer ( based on what ? )
-    uint32_t allocSize; // allocated size, set after sent
+    uint32_t size; // allocated size, set after sent
 } __attribute__((aligned(16))) __attribute__((packed)) mailboxFBAlloc_t;
 
 // pitch between each pixel
@@ -48,11 +48,25 @@ typedef struct mailboxFBOff {
 typedef struct mailboxFBTags {
     mailboxFBSize_t  phySize;  // the requested physical size
     mailboxFBSize_t  virtSize; // the requested virtual size
+    mailboxFBOff_t   off;      // virtual offset
     mailboxFBDepth_t depth;    // pixel depth in bits
     mailboxFBOrder_t order;    // requested colour order
-    mailboxFBOff_t   off;      // virtual offset
     mailboxFBAlloc_t alloc;    // the allocated buffer
     mailboxFBPitch_t pitch;    // the pitch of the pixels
+    uint32_t end;
 } __attribute__((aligned(16))) __attribute__((packed)) mailboxFBTags_t;
+
+// stores all the gpu info
+typedef struct GPUInfo {
+    uint32_t* fb;
+    uint32_t width;
+    uint32_t height;
+    uint32_t rgba; // if 1 order is rgba, if 0 bgra
+    uint32_t pitch;
+} GPUInfo_t;
+
+void gpuInit(void);
+// colour should be passed in rgba
+void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y);
 
 #endif // GPU_H_
