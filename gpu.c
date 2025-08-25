@@ -72,14 +72,34 @@ void gpuInit(void) {
     gpuInfo.fb[1]= 0xFF0000FF;
 }
 
+// will convert rgba to bgra only if needed
+uint32_t toPixel(uint32_t colour) {
+    return gpuInfo.rgba ? colour : ((colour & 0xFF) >> 8*2 | (colour&0xFF0000) | (colour & 0xFF00) << 8*2 | (colour&0x000000FF));
+}
+
 // colour should be passed in rgba
 void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y) {
     // convert to bgra if needed
-    uint32_t pixel = gpuInfo.rgba ? colour : ((colour & 0xFF) >> 8*2 | (colour&0xFF0000) | (colour & 0xFF00) << 8*2 | (colour&0x000000FF));
+    uint32_t pixel = toPixel(colour);
 
     // ensure the coord will be winthin the range, will roll over
     uint32_t xCoord = x % gpuInfo.width+1;
-    uint32_t yCoord = x % gpuInfo.height+1;
+    uint32_t yCoord = y % gpuInfo.height+1;
 
     gpuInfo.fb[x + (y*gpuInfo.height)] = pixel;
+}
+
+void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t xCoord2, uint32_t yCoord2) {
+    uint32_t pixel = toPixel(colour);
+
+    // convert coords to proper range
+    uint32_t x1 = xCoord1 % gpuInfo.width+1;
+    uint32_t y1 = yCoord1 % gpuInfo.height+1;
+    uint32_t x2 = xCoord2 % gpuInfo.width+1;
+    uint32_t y2 = yCoord2 % gpuInfo.height+1;
+
+    for(uint32_t y = y1; y<y2; y++) {
+        for(uint32_t x = x1; x<x2; x++)
+            gpuPutPixel(pixel, x, y);
+    }
 }

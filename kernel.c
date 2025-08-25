@@ -10,6 +10,7 @@ void kmain() {
     miniuartSends("#setup miniuart\n");
     gpuInit();
     gpuPutPixel(0x0000FFFF, 0, 1);
+    gpuFillArea(0x0000FFFF, 5, 10, 14, 28);
 
     while(1) {
         miniuartSendc(miniuartGetc());

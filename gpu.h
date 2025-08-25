@@ -68,5 +68,6 @@ typedef struct GPUInfo {
 void gpuInit(void);
 // colour should be passed in rgba
 void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y);
+void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t xCoord2, uint32_t yCoord2);
 
 #endif // GPU_H_
