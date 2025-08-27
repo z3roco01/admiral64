@@ -2,8 +2,8 @@
 #define MAILBOX_H_
 
 #include<stdint.h>
-#include"uart.h"
-#include"gpio.h"
+#include"../uart/uart.h"
+#include"../gpio/gpio.h"
 
 #define MAILBOX_REQUEST    0
 

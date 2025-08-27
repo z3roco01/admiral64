@@ -2,7 +2,7 @@
 #define GPU_H_
 
 #include<stdint.h>
-#include"mailbox.h"
+#include"../mailbox/mailbox.h"
 
 // gpu mailbox structures
 // allocate memory space for the buffer

@@ -1,0 +1,18 @@
+LD_FILE=linker.ld
+ELF_OUT=kernel8.elf
+KRN_IMG=kernel8.img
+
+MAKE=make
+GCC_PRE=aarch64-none-elf-
+CFLAGS=-Wall -O2 -ffreestanding -nostdlib -nostartfiles
+
+KERN_DIR=./kernel
+DRIV_DIR=$(KERN_DIR)/drivers
+GPIO_DIR=$(DRIV_DIR)/gpio
+GPU_DIR=$(DRIV_DIR)/gpu
+MBOX_DIR=$(DRIV_DIR)/mailbox
+UART_DIR=$(DRIV_DIR)/uart
+MEM_DIR=$(KERN_DIR)/memory
+
+C_DIRS=$(KERN_DIR) $(GPIO_DIR) $(GPU_DIR) $(MBOX_DIR) $(UART_DIR) $(MEM_DIR)
+BOOT_DIR=./bootloader

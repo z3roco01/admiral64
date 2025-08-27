@@ -2,8 +2,8 @@
 #define UART_H_
 
 #include<stdint.h>
-#include"mmio.h"
-#include"gpio.h"
+#include"../mmio/mmio.h"
+#include"../gpio/gpio.h"
 
 /* UART1 mini uart registers*/
 #define AUX_ENABLES     ((volatile uint32_t*)(MMIO_BASE+0x215004))
