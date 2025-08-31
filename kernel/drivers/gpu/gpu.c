@@ -1,5 +1,8 @@
 #include "gpu.h"
 
+#define GPU_X_RES 640
+#define GPU_Y_RES 480
+
 static GPUInfo_t gpuInfo;
 
 void gpuInit(void) {
@@ -13,14 +16,14 @@ void gpuInit(void) {
     payload[2] = MAILBOX_FB_SET_PHY_SIZE;
     payload[3] = 8;
     payload[4] = 8;
-    payload[5] = 640; // x res
-    payload[6] = 480; // y res
+    payload[5] = GPU_X_RES; // x res
+    payload[6] = GPU_Y_RES; // y res
 
     payload[7] = MAILBOX_FB_SET_VIRT_SIZE;
     payload[8] = 8;
     payload[9] = 8;
-    payload[10] = 640; // x res
-    payload[11] = 480; // y res
+    payload[10] = GPU_X_RES; // x res
+    payload[11] = GPU_Y_RES; // y res
 
     // reset virtual offset to 0
     payload[12] = MAILBOX_FB_SET_VIRT_OFF;
@@ -61,20 +64,29 @@ void gpuInit(void) {
     payload[28]&=0x3FFFFFFF;   //convert GPU address to ARM address
 
     // may not get exactly the right parameters, so we store them and refer to them, rather than hardcoded
-    gpuInfo.width  = payload[5];
+    //gpuInfo.width  = payload[5];
+    gpuInfo.width = GPU_X_RES;
     // stupid workaround since accessing payload[6] hangs
-    gpuInfo.height = (uint32_t)(((uint64_t)payload[5]) & 0xFFFFFFFF);
+    //gpuInfo.height = (uint32_t)(((uint64_t)payload[5]) & 0xFFFFFFFF);
+    gpuInfo.height = GPU_Y_RES;
     gpuInfo.rgba   = payload[24];
     gpuInfo.pitch  = payload[33];
     gpuInfo.fb     = (uint32_t*)((uint64_t)payload[28]);
 
     miniuartSends("#alloced a buffer for the gpu!\n");
-    gpuInfo.fb[1]= 0xFF0000FF;
 }
 
 // will convert rgba to bgra only if needed
 uint32_t toPixel(uint32_t colour) {
     return gpuInfo.rgba ? colour : ((colour & 0xFF) >> 8*2 | (colour&0xFF0000) | (colour & 0xFF00) << 8*2 | (colour&0x000000FF));
+}
+
+uint32_t gpuGetX(void) {
+    return gpuInfo.width;
+}
+
+uint32_t gpuGetY(void) {
+    return gpuInfo.height;
 }
 
 // colour should be passed in rgba
@@ -83,10 +95,12 @@ void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y) {
     uint32_t pixel = toPixel(colour);
 
     // ensure the coord will be winthin the range, will roll over
-    uint32_t xCoord = x % gpuInfo.width+1;
-    uint32_t yCoord = y % gpuInfo.height+1;
+    uint32_t xCoord = x >= gpuInfo.width ? gpuInfo.width-1 : x;
+    uint32_t yCoord = y >= gpuInfo.height ? gpuInfo.height-1 : y;
 
-    gpuInfo.fb[x + (y*gpuInfo.height)] = pixel;
+    uint64_t off = (yCoord*gpuInfo.width) + xCoord;
+
+    gpuInfo.fb[off] = pixel;
 }
 
 void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t xCoord2, uint32_t yCoord2) {
