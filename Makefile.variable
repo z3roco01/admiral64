@@ -5,3 +5,5 @@ KRN_IMG=kernel8.img
 MAKE=make
 GCC_PRE=aarch64-none-elf-
 CFLAGS=-Wall -O2 -ffreestanding -nostdlib -nostartfiles
+
+RM=rm -f

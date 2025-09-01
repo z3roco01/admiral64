@@ -70,7 +70,7 @@ void gpuInit(void);
 void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y);
 void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t xCoord2, uint32_t yCoord2);
 void gpuFillScreen(uint32_t colour);
-uint32_t gpuGetX(void);
-uint32_t gpuGetY(void);
+uint32_t gpuGetWidth(void);
+uint32_t gpuGetHeight(void);
 
 #endif // GPU_H_

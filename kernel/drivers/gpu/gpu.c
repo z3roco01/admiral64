@@ -77,22 +77,22 @@ void gpuInit(void) {
 }
 
 // will convert rgba to bgra only if needed
+// in rgba: 0xAABBGGRR
 uint32_t toPixel(uint32_t colour) {
     return gpuInfo.rgba ? colour : ((colour & 0xFF) >> 8*2 | (colour&0xFF0000) | (colour & 0xFF00) << 8*2 | (colour&0x000000FF));
 }
 
-uint32_t gpuGetX(void) {
+uint32_t gpuGetWidth(void) {
     return gpuInfo.width;
 }
 
-uint32_t gpuGetY(void) {
+uint32_t gpuGetHeight(void) {
     return gpuInfo.height;
 }
 
 // colour should be passed in rgba
 void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y) {
-    // convert to bgra if needed
-    uint32_t pixel = toPixel(colour);
+    // dont convert, performace save for things like fill area
 
     // ensure the coord will be winthin the range, will roll over
     uint32_t xCoord = x >= gpuInfo.width ? gpuInfo.width-1 : x;
@@ -100,7 +100,7 @@ void gpuPutPixel(uint32_t colour, uint32_t x, uint32_t y) {
 
     uint64_t off = (yCoord*gpuInfo.width) + xCoord;
 
-    gpuInfo.fb[off] = pixel;
+    gpuInfo.fb[off] = colour;
 }
 
 void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t xCoord2, uint32_t yCoord2) {

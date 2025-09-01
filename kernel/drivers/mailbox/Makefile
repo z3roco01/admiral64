@@ -8,4 +8,4 @@ $(OBJS): $(SRCS)
 	$(GCC_PRE)gcc $(CFLAGS) -c $< -o $@
 
 clean:
-	rm $(OBJS)
+	$(RM) $(OBJS)

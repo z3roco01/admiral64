@@ -5,5 +5,6 @@
 #include"../drivers/gpu/gpu.h"
 
 void termInit(void);
+void termPutc(char c);
 
 #endif // TERM_H_
