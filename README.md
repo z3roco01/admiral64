@@ -7,6 +7,7 @@ An operating system for raspi3 to mimic a commodore like environment
 
 # Planned Features
 - [X] Basic on screen terminal
+- [ ] Memory manager
 - [ ] File reading
 - [ ] Boot to BASIC interpreater ( may use uart if started before font )
 - [ ] Assembler and asm debugger
