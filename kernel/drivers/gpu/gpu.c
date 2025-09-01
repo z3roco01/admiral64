@@ -117,3 +117,7 @@ void gpuFillArea(uint32_t colour, uint32_t xCoord1, uint32_t yCoord1, uint32_t x
             gpuPutPixel(pixel, x, y);
     }
 }
+
+void gpuFillScreen(uint32_t colour) {
+    gpuFillArea(colour, 0, 0, gpuInfo.width, gpuInfo.height);
+}
