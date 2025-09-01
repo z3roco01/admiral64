@@ -6,7 +6,7 @@ An operating system for raspi3 to mimic a commodore like environment
 - [Very helpful doc](https://www.raspberrypi.org/app/uploads/2012/02/BCM2835-ARM-Peripherals.pdf) for peripherials ( its for bcm2835 but the only difference is the arm core used )
 
 # Planned Features
-- [ ] SSFN font support ( will use temp font first )
+- [X] Basic on screen terminal
 - [ ] File reading
 - [ ] Boot to BASIC interpreater ( may use uart if started before font )
 - [ ] Assembler and asm debugger
@@ -14,5 +14,6 @@ An operating system for raspi3 to mimic a commodore like environment
 - [ ] ELF execution support
 ## Potential Features
 None of this is certain to come, but would be cool.
+- [ ] SSFN font support
 - [ ] C compiler
 - [ ] Some sort of kernel module support ( maybe extract out kernel into modules )
