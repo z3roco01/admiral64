@@ -11,6 +11,7 @@ void kmain(uint64_t dtbPtr, uint64_t x1, uint64_t x2, uint64_t x3) {
     miniuartSends("#setup miniuart\n");
     gpuInit();
     termInit();
+    char* asd = "gurt: yo\n\0";
 
     char c;
     while(1) {

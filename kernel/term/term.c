@@ -1,5 +1,8 @@
 #include "term.h"
 
+#define TERM_BORDER 0xFFED7286
+#define TERM_BG     0xFF9C3725
+#define TERM_FG     0xFFFFFFFF
 #define TERM_MARGIN 25
 
 uint16_t termX = 0;
@@ -16,7 +19,7 @@ uint32_t termGetHeight(void) {
 
 // will use font colour and base it off the terminal start
 void termPutPixel(uint16_t x, uint16_t y) {
-    gpuPutPixel(0xFFFFFFFF, TERM_MARGIN+x, TERM_MARGIN+y);
+    gpuPutPixel(TERM_FG, TERM_MARGIN+x, TERM_MARGIN+y);
 }
 
 // TODO: REAL FONT !!
@@ -61,9 +64,16 @@ void termPutc(char c) {
     termX++;
 }
 
+void termPuts(char* str) {
+    while(*str) {
+        termPutc(*str);
+        str++;
+    }
+}
+
 void termInit(void) {
-    gpuFillArea(0xFFDA9832, 0, 0, gpuGetWidth()-1, gpuGetHeight()-1);
-    gpuFillArea(0xFF000000, TERM_MARGIN-1, TERM_MARGIN-1, termGetWidth()-1, termGetHeight()-1);
+    gpuFillArea(TERM_BORDER, 0, 0, gpuGetWidth()-1, gpuGetHeight()-1);
+    gpuFillArea(TERM_BG, TERM_MARGIN-1, TERM_MARGIN-1, termGetWidth()-1, termGetHeight()-1);
 
     // font size of 8
     termXMax = (termGetWidth()/8)-2;

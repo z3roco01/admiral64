@@ -6,5 +6,6 @@
 
 void termInit(void);
 void termPutc(char c);
+void termPuts(char* str);
 
 #endif // TERM_H_
