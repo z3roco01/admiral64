@@ -34,6 +34,9 @@ void miniuartSends(char* str) {
     char* s = str; // copy of pointer to not mess with input
 
     while(*s) { // loop until null
+        if(*s == '\n')
+            miniuartSendc('\r');
+
         // send the next character then increment the pointer
         miniuartSendc(*s++);
     }
@@ -45,5 +48,7 @@ char miniuartGetc() {
         asm volatile("nop"); // may be optimized to nothing if its empty
     }
 
-    return (char)*AUX_MU_IO_REG;
+    char c = *AUX_MU_IO_REG;
+
+    return c == '\r' ? '\n' : c;
 }
