@@ -22,6 +22,11 @@ void termPutPixel(uint16_t x, uint16_t y) {
     gpuPutPixel(TERM_FG, TERM_MARGIN+x, TERM_MARGIN+y);
 }
 
+// sets pixel to bg colour
+void termClrPixel(uint16_t x, uint16_t y) {
+    gpuPutPixel(TERM_BG, TERM_MARGIN+x, TERM_MARGIN+y);
+}
+
 // TODO: REAL FONT !!
 void termPutc(char c) {
     if(c > 127) { // font currently doesnt support extended ascii
@@ -34,6 +39,21 @@ void termPutc(char c) {
     if(c == '\n') {
         termY++;
         termX = 0;
+        return;
+    }else if(c == '\b') {
+        if(termX == 0) {
+            if(termY == 0)
+                return;
+            termY--;
+            termX = termXMax;
+            termPutc(' ');
+            termY--;
+            termX = termXMax;
+        }else {
+            termX--;
+            termPutc(' ');
+            termX--;
+        }
         return;
     }
 
@@ -58,6 +78,8 @@ void termPutc(char c) {
         for(uint8_t x = 0; x<8; x++) {
             if(character[y] & 1 << x)
                 termPutPixel(startX+x, startY+y);
+            else
+                termClrPixel(startX+x, startY+y);
         }
     }
 
